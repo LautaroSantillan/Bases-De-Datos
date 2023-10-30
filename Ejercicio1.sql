@@ -1,12 +1,12 @@
 /* 
-Dada la siguiente base de datos:
-Almacén (Nro, Responsable)
-Artículo (CodArt, descripción, Precio)
-Material (CodMat, Descripción)
-Proveedor (CodProv, Nombre, Domicilio, Ciudad)
-Tiene (Nro, CodArt)
-Compuesto_por (CodArt, CodMat)
-Provisto_por (CodMat, CodProv) 
+	Dada la siguiente base de datos:
+	Almacén (Nro, Responsable)
+	Artículo (CodArt, descripción, Precio)
+	Material (CodMat, Descripción)
+	Proveedor (CodProv, Nombre, Domicilio, Ciudad)
+	Tiene (Nro, CodArt)
+	Compuesto_por (CodArt, CodMat)
+	Provisto_por (CodMat, CodProv) 
 */
 
 -- CREACION DE TABLAS
@@ -69,7 +69,7 @@ INSERT INTO Almacen(Nro, Responsable) VALUES (2, 'Mountain');
 INSERT INTO Almacen(Nro, Responsable) VALUES (3, 'Krieger');
 INSERT INTO Almacen(Nro, Responsable) VALUES (4, 'Speed');
 INSERT INTO Almacen(Nro, Responsable) VALUES (5, 'Fazio');
-
+--
 INSERT INTO Articulo(CodArt, Descripcion, Precio) VALUES (1, 'Celular', 1200);
 INSERT INTO Articulo(CodArt, Descripcion, Precio) VALUES (2, 'PS5', 1000);
 INSERT INTO Articulo(CodArt, Descripcion, Precio) VALUES (3, 'PC', 500);
@@ -78,7 +78,7 @@ INSERT INTO Articulo(CodArt, Descripcion, Precio) VALUES (5, 'Auto', 25000);
 INSERT INTO Articulo(CodArt, Descripcion, Precio) VALUES (6, 'Anteojos', 15);
 INSERT INTO Articulo(CodArt, Descripcion, Precio) VALUES (7, 'Auriculares', 20); -- UPDATE Articulo SET Precio=5 WHERE CodArt=7
 INSERT INTO Articulo(CodArt, Descripcion, Precio) VALUES (8, 'Calculadora', 9);
-
+--
 INSERT INTO Material(CodMat, Descripcion) VALUES (1, 'Bateria');
 INSERT INTO Material(CodMat, Descripcion) VALUES (2, 'Litio');
 INSERT INTO Material(CodMat, Descripcion) VALUES (3, 'Vidrio');
@@ -88,7 +88,7 @@ INSERT INTO Material(CodMat, Descripcion) VALUES (6, 'Pilas');
 INSERT INTO Material(CodMat, Descripcion) VALUES (7, 'Bateria'); -- UPDATE Material SET Descripcion='Memoria' WHERE CodMat=7
 INSERT INTO Material(CodMat, Descripcion) VALUES (8, 'UPC');
 INSERT INTO Material(CodMat, Descripcion) VALUES (9, 'Plastico');
-
+--
 INSERT INTO Proveedor(CodProv, Nombre, Domicilio, Ciudad) VALUES (1, 'Lautaro', 'Hipolito', 'Ciudadela');
 INSERT INTO Proveedor(CodProv, Nombre, Domicilio, Ciudad) VALUES (5, 'Sergio', 'Parma', 'La Plata');
 INSERT INTO Proveedor(CodProv, Nombre, Domicilio, Ciudad) VALUES (10, 'Eugenio', 'Limito', 'Capital Federal');
@@ -96,7 +96,7 @@ INSERT INTO Proveedor(CodProv, Nombre, Domicilio, Ciudad) VALUES (15, 'Marcos', 
 INSERT INTO Proveedor(CodProv, Nombre, Domicilio, Ciudad) VALUES (20, 'Lopez', 'Genova', 'Ramos Mejias');
 INSERT INTO Proveedor(CodProv, Nombre, Domicilio, Ciudad) VALUES (25, 'Perez', 'Ricci', 'Pergamino');
 INSERT INTO Proveedor(CodProv, Nombre, Domicilio, Ciudad) VALUES (30, 'Julio', 'Meza', 'Pergamino');
-
+--
 INSERT INTO Tiene(Nro, CodArt) VALUES (1, 1);
 INSERT INTO Tiene(Nro, CodArt) VALUES (1, 2);
 INSERT INTO Tiene(Nro, CodArt) VALUES (1, 3);
@@ -115,7 +115,7 @@ INSERT INTO Tiene(Nro, CodArt) VALUES (4, 2);
 INSERT INTO Tiene(Nro, CodArt) VALUES (5, 2); 
 INSERT INTO Tiene(Nro, CodArt) VALUES (5, 6);
 INSERT INTO Tiene(Nro, CodArt) VALUES (5, 7);
-
+--
 INSERT INTO Compuesto_por(CodArt, CodMat) VALUES (1, 1);
 INSERT INTO Compuesto_por(CodArt, CodMat) VALUES (1, 2);
 INSERT INTO Compuesto_por(CodArt, CodMat) VALUES (1, 3);
@@ -169,17 +169,17 @@ INSERT INTO Compuesto_por(CodArt, CodMat) VALUES (8, 6);
 INSERT INTO Compuesto_por(CodArt, CodMat) VALUES (8, 7);
 INSERT INTO Compuesto_por(CodArt, CodMat) VALUES (8, 8);
 INSERT INTO Compuesto_por(CodArt, CodMat) VALUES (8, 9);
-
+--
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (1, 1);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (4, 1);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (5, 1);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (9, 1);
-
+--
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (1, 5);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (2, 5);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (3, 5);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (8, 5);
-
+--
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (6, 10);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (7, 10);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (8, 10);
@@ -187,12 +187,12 @@ INSERT INTO Provisto_por(CodMat, CodProv) VALUES (2, 10);
 
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (1, 15);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (6, 15);
-
+--
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (2, 20);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (4, 20);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (6, 20);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (8, 20);
-
+--
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (1, 25);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (3, 25);
 INSERT INTO Provisto_por(CodMat, CodProv) VALUES (5, 25);
@@ -240,11 +240,41 @@ WHERE Ciudad='Pergamino' AND Nombre LIKE 'Perez'
 
 SELECT a. *
 FROM Almacen as a INNER JOIN (
-	SELECT Nro 
-	FROM Tiene
-	WHERE CodArt=1
+	SELECT Nro FROM Tiene WHERE CodArt=1
 	INTERSECT 
-	SELECT Nro 
-	FROM Tiene
-	WHERE CodArt=2
+	SELECT Nro FROM Tiene WHERE CodArt=2
 ) as b on a.Nro=b.Nro
+
+-- 8. Listar los artículos que cuesten más de $100 o que estén compuestos por el material M1.
+
+SELECT a.CodArt
+FROM Articulo a INNER JOIN Compuesto_por comp ON a.CodArt = comp.CodMat
+WHERE a.Precio > 100 AND comp.CodMat = 1
+
+-- 9. Listar los materiales (código y descripción), provistos por proveedores de la ciudad de Pergamino. 
+
+SELECT mat.CodMat as Codigo, mat.Descripcion as Nombre
+FROM Material mat INNER JOIN (
+					SELECT provpor.CodMat
+					FROM Provisto_por provpor INNER JOIN (
+												SELECT prov.CodProv
+												FROM Proveedor prov
+												WHERE prov.Ciudad LIKE 'Pergamino'
+					) as b ON provpor.CodProv = b.CodProv	
+) as c ON mat.CodMat = c.CodMat
+
+/*SELECT * FROM Almacen
+SELECT * FROM Articulo
+SELECT * FROM Material
+SELECT * FROM Proveedor
+SELECT * FROM Tiene
+SELECT * FROM Compuesto_por
+SELECT * FROM Provisto_por*/
+
+/*DROP TABLE Provisto_por
+DROP TABLE Compuesto_por
+DROP TABLE Tiene
+DROP TABLE Articulo
+DROP TABLE Material
+DROP TABLE Proveedor
+DROP TABLE Almacen*/
