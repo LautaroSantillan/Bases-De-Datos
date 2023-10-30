@@ -1,10 +1,10 @@
 /*
-Dada la siguiente base de datos:
-Proveedor (NroProv, NomProv, Categoria, CiudadProv)
-Artículo (NroArt, Descripción, CiudadArt, Precio)
-Cliente (NroCli, NomCli, CiudadCli)
-Pedido (NroPed, NroArt, NroCli, NroProv, FechaPedido, Cantidad, PrecioTotal)
-Stock (NroArt, fecha, cantidad)
+	Dada la siguiente base de datos:
+	Proveedor (NroProv, NomProv, Categoria, CiudadProv)
+	Artículo (NroArt, Descripción, CiudadArt, Precio)
+	Cliente (NroCli, NomCli, CiudadCli)
+	Pedido (NroPed, NroArt, NroCli, NroProv, FechaPedido, Cantidad, PrecioTotal)
+	Stock (NroArt, fecha, cantidad)
 */
 
 -- Scripts Creación de Tablas:
@@ -47,7 +47,18 @@ INSERT INTO Pedido VALUES
 (4, 4, 60, 4, ' 2023-03-04', 1, 75.00),
 (5, 5, 80, 5, ' 2023-03-05', 3, 240.00), 
 (6, 2, 80, 3, ' 2023-03-10', 2, 100.00),
-(7, 2, 23, 5, ' 2023-06-01', 1, 50.00)
+(7, 2, 23, 5, ' 2023-06-01', 1, 50.00),
+(8, 1, 30, 3, ' 2023-06-12', 5, 500.00),
+(9, 2, 45, 1, ' 2023-04-15', 2, 150.00),
+(10, 1, 45, 3, ' 2023-05-08', 1, 100.00),
+(11, 2, 45, 3, ' 2023-03-30', 5, 250.00),
+(12, 2, 45, 1, ' 2023-04-15', 3, 150.00),
+(13, 3, 80, 1, ' 2023-12-15', 15, 150.00
+(14, 4, 23, 5, ' 2023-05-22', 2, 150.00),
+(15, 5, 30, 5, ' 2023-01-31', 3, 240.00),
+(16, 4, 80, 4, ' 2023-08-08', 1, 75.00),
+(17, 5, 60, 4, ' 2023-04-11', 4, 320.00),
+(18, 4, 80, 1, ' 2023-11-18', 2, 150.00)
 
 INSERT INTO Stock VALUES
 (1, '2023-03-01', 10),
@@ -82,7 +93,7 @@ FROM Pedido ped INNER JOIN (
 
 -- 4. Hallar los pedidos en los que un cliente de Rosario solicita artículos producidos en la ciudad de Mendoza.
 
-SELECT *
+SELECT ped.*
 FROM Pedido ped INNER JOIN (
 					SELECT cli.NroCli
 					FROM Cliente cli
@@ -98,24 +109,60 @@ WHERE ped.NroArt = 2
 
 SELECT ped.*
 FROM Pedido ped INNER JOIN (
-					SELECT cli.NroCli
-					FROM Cliente cli
-					WHERE cli.NroCli = 23
-) as b ON ped.NroCli = b.NroCli
-WHERE 
-DISTINCT
-SELECT ped.*
-FROM Pedido ped INNER JOIN (
-					SELECT cli.NroCli
-					FROM Cliente cli
-					WHERE cli.NroCli = 30
-) as c ON ped.NroCli = c.NroCli
+					SELECT ped.NroPed
+					FROM Pedido ped INNER JOIN (
+										SELECT ped.NroArt
+										FROM Pedido ped
+										WHERE ped.NroCli = 30
+					) as b ON ped.NroArt = b.NroArt
+) as c ON ped.NroPed = c.NroPed
+WHERE ped.NroCli = 23 OR ped.NroCli = 30
 
 -- 6. Hallar los proveedores que suministran todos los artículos cuyo precio es superior al precio promedio de los artículos que se producen en La Plata.
 
-SELECT AVG(art.Precio) as Promedio_Art_LaPlata
-FROM Articulo art 
-WHERE art.CiudadArt LIKE 'La Plata'
+SELECT ped.NroProv as Proveedores
+FROM Pedido ped INNER JOIN (
+					SELECT art.NroArt
+					FROM Articulo art
+					WHERE art.Precio > (SELECT AVG(art.Precio)FROM Articulo art WHERE art.CiudadArt LIKE 'La Plata')
+) as b ON ped.NroArt = b.NroArt
+
+-- 7. Hallar la cantidad de artículos diferentes provistos por cada proveedor que provee a todos los clientes de Junín. 
+
+SELECT ped.NroProv as Provedor_Nº, COUNT(ped.NroArt) as Articulos_Diferentes
+FROM Pedido ped
+WHERE ped.NroCli = 45
+GROUP BY ped.NroProv
+
+-- 8. Hallar los nombres de los proveedores cuya categoría sea mayor que la de todos los proveedores que proveen el artículo “cuaderno”. 
+
+SELECT prov.NomProv as Nombre_Proveedor
+FROM Proveedor prov INNER JOIN (
+						SELECT MAX(prov.Categoria) as Categoria_Max
+						FROM Proveedor prov INNER JOIN (
+												SELECT ped.NroProv
+												FROM Pedido ped 
+												WHERE ped.NroArt = 3
+						) as b ON prov.NroProv = b.NroProv
+) as c ON prov.Categoria > Categoria_Max
+
+-- 9. Hallar los proveedores que han provisto más de 5 unidades entre los artículos A001 y A100. // NroArt = 4 ^ 5
+
+SELECT prov.*
+FROM Proveedor prov INNER JOIN (
+						SELECT ped.NroProv
+						FROM Pedido ped INNER JOIN (
+											SELECT ped.NroProv, SUM(ped.Cantidad) as SumUnidades
+											FROM Pedido ped
+											WHERE ped.NroArt BETWEEN 4 AND 5
+											GROUP BY ped.NroProv
+						) as b ON ped.NroProv = b.NroProv
+						WHERE b.SumUnidades > 5
+						GROUP BY ped.NroProv
+) as c ON prov.NroProv = c.NroProv
+
+-- 10. Listar la cantidad y el precio total de cada artículo que han pedido los Clientes a sus proveedores entre las fechas 01-01-2004 y 31-03-2004 
+-- (se requiere visualizar Cliente, Articulo, Proveedor, Cantidad y Precio). 
 
 SELECT * FROM Proveedor
 SELECT * FROM Articulo
